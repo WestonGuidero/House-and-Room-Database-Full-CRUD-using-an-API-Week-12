@@ -37,6 +37,27 @@ $('#create-new-house').on('click', function() {
     });
 });
 
+// Add room to a house
+$(document).on('click', '.add-room', function () {
+    const houseId = $(this).data('house-id');
+    const roomName = prompt('Enter room name:');
+
+    if (roomName && roomArea) {
+      $.ajax({
+        url: `${API_URL}/${houseId}/rooms`,
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ name: roomName, area: roomArea }),
+        success: function () {
+          fetchHouses(); // Refresh houses after adding a room
+        },
+        error: function (error) {
+          console.error('Error creating room:', error);
+        }
+      });
+    }
+  });
+  
 // Update house
 function updateHouse(id, newName) {
     $.ajax({
@@ -77,6 +98,14 @@ function renderHouses(houses) {
                 <h3>${house.name}</h3>
                 <button class="btn btn-warning update-house" data-id="${house.id}">Update</button>
                 <button class="btn btn-danger delete-house" data-id="${house.id}">Delete</button>
+                <button class="btn btn-primary add-room" data-house-id="${house.id}">Add Room</button>
+                <div class="rooms-container">
+                    ${house.rooms.map(room => `
+                        <div class="room">
+                            <h6>${room.name}</h6>
+                        </div>
+                    `).join('')}
+                </div>
             </div>
         `);
         app.append(houseDiv);
@@ -95,6 +124,26 @@ function renderHouses(houses) {
     $('.delete-house').on('click', function() {
         const id = $(this).data('id');
         deleteHouse(id);
+    });
+
+    // Add room event
+    $('.add-room').on('click', function() {
+        const houseId = $(this).data('house-id');
+        const roomName = prompt('Enter room name:');
+        if (roomName && roomArea) {
+            $.ajax({
+                url: `${API_URL}/${houseId}/rooms`,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ name: roomName, area: roomArea }),
+                success: function() {
+                    fetchHouses(); // Refresh houses after adding a room
+                },
+                error: function(error) {
+                    console.error('Error creating room:', error);
+                }
+            });
+        }
     });
 }
 

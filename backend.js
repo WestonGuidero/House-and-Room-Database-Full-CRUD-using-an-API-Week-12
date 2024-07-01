@@ -57,3 +57,15 @@ app.delete('/houses/:id', async (req, res) => {
     res.status(500).json({ error: 'An error occurred' });
   }
 });
+
+// POST new room for a house
+app.post('/houses/:houseId/rooms', async (req, res) => {
+  const { houseId } = req.params;
+  try {
+    const response = await axios.post(`${API_URL}/houses/${houseId}/rooms`, req.body);
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error creating room:', error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
