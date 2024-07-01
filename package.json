@@ -1,0 +1,20 @@
+{
+  "name": "week-12---unit-final-coding-project",
+  "version": "1.0.0",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.19.2",
+    "init": "^0.1.2",
+    "jquery": "^3.7.1"
+  },
+  "description": ""
+}
